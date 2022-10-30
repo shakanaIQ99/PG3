@@ -1,50 +1,58 @@
 #include <stdio.h>
-#include<Windows.h>
-#include <stdlib.h>
-#include <time.h>
-#include<functional>
+#include<iostream>
+#include<list>
+
+using namespace std;
 
 
-
-void setTimeout(int second)
+int main()
 {
-	Sleep(second * 1000);
-
-}
-
-int main(void)
-{
-	
-
-	int choicenum;
-	int timer = 3;
-	
-
-	printf("îºÇ©íöÇ©\n1:îº 2:íö\n");
-	scanf_s("%d", &choicenum);
-
-	std::function<void()>anser = []() 
+	bool Inset = true;
+	list<const char*>YamanoteStation =
 	{
-		srand(time(NULL));
-		const int dicesize = 6;
-		int dice;
-
-		dice = rand() % dicesize + 1;
-
-		if (dice % 2 == 0)
-		{
-			printf("èoñ⁄%d:íö!\n", dice);
-
-		}
-		if (dice % 2 == 1)
-		{
-			printf("èoñ⁄%d:îº!\n", dice);
-		}
+		"Tokyo","Yurakucho","Shimbashi","Hamamatsucho","Tamachi",
+		"Shinagawa","Osaki","Gotanda","Meguro","Ebisu","Shibuya",
+		"Harajuku","Yoyogi","Shinjuku","Shin-Okubo","Takadanobaba",
+		"Mejiro","Ikebukuro","Otuka","Sugamo","Komagome","Tabata",
+		"Nippori","Uguisudani","Ueno","Okachimachi","Akihabara","Kanda"
 	};
 
-	
-	setTimeout(timer);
-	anser();
-	
+
+	cout << "YamanoteStation1970" << "\n";
+
+	for (list<const char*>::iterator itr = YamanoteStation.begin(); itr != YamanoteStation.end(); ++itr)
+	{
+		cout << *itr << "\n";
+	}
+
+	cout << "YamanoteStation1971" << "\n";
+
+
+	for (list<const char*>::iterator itr = YamanoteStation.begin(); itr != YamanoteStation.end(); ++itr)
+	{
+		if (*itr == "Nippori" && Inset)
+		{
+			itr = YamanoteStation.insert(itr, "Nisi-Nippori");
+			Inset = false;
+		}
+		cout << *itr << "\n";
+
+	}
+
+	cout << "YamanoteStation2020" << "\n";
+
+	Inset = true;
+
+	for (list<const char*>::iterator itr = YamanoteStation.begin(); itr != YamanoteStation.end(); ++itr)
+	{
+		if (*itr == "Shinagawa" && Inset)
+		{
+			itr = YamanoteStation.insert(itr, "Takanawa-Gateway");
+			Inset = false;
+		}
+		cout << *itr << "\n";
+
+	}
+
 	return 0;
 }
