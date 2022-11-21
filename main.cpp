@@ -30,5 +30,6 @@ int main(void)
 	setTimeout(choice, timer);
 	anser();
 
+	system("pause");
 	return 0;
 }
