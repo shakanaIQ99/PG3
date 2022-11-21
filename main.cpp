@@ -4,47 +4,31 @@
 #include <time.h>
 #include<functional>
 
-
-
-void setTimeout(int second)
-{
-	Sleep(second * 1000);
-
-}
-
 int main(void)
 {
-	
+
 
 	int choicenum;
 	int timer = 3;
-	
 
 	printf("半か丁か\n1:半 2:丁\n");
 	scanf_s("%d", &choicenum);
 
-	std::function<void()>anser = []() 
-	{
-		srand(time(NULL));
-		const int dicesize = 6;
-		int dice;
+	const int dicesize = 6;
+	int dice;
 
-		dice = rand() % dicesize + 1;
+	srand(time(NULL));
+	dice = rand() % dicesize + 1;
 
-		if (dice % 2 == 0)
-		{
-			printf("出目%d:丁!\n", dice);
+	std::function<void()>choice = [&]() {printf("%s\n", (choicenum == 1) ? "選択は半" : "選択は丁"); };
 
-		}
-		if (dice % 2 == 1)
-		{
-			printf("出目%d:半!\n", dice);
-		}
-	};
 
-	
-	setTimeout(timer);
+	std::function<void()>anser = [&]() {printf("%s\n", (dice % 2) ? "答えは半" : "答えは丁"); };
+
+	std::function<void(std::function<void()>, int)> setTimeout = [](std::function<void()> fx, int second) {fx(); Sleep(second * 1000); };
+
+	setTimeout(choice, timer);
 	anser();
-	
+
 	return 0;
 }
