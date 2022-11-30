@@ -1,35 +1,166 @@
-#include <stdio.h>
-#include<Windows.h>
-#include <stdlib.h>
-#include <time.h>
-#include<functional>
-
-int main(void)
+#include <iostream>
+#include <string>
+#include <stdexcept>
+using namespace std;
+template <typename T>
+struct Node
 {
+    T value_;
+    Node* prev_;
+    Node* next_;
+    Node()
+    {
+        prev_ = this;
+        next_ = this;
+    }
+    Node(T value, Node* prev, Node* next)
+    {
+        value_ = value;
+        prev_ = prev;
+        next_ = next;
+    }
+};
+template <typename T>
+class DoublyLinkedList
+{
+private:
+    Node<T>* dummy_;
+    int size_;
+public:
+    DoublyLinkedList()
+    {
+        dummy_ = new Node<T>();
+        size_ = 0;
+    }
+    ~DoublyLinkedList()
+    {
+        clear();
+    }
 
+    void add(T v, Node<T>* node)
+    {
+        // insert a new node between the current node and the next of current node
+        Node<T>* newNode = new Node<T>(v, node, node->next_);
+        node->next_->prev_ = newNode;
+        node->next_ = newNode;
+        // update the current node
+        node = newNode;
+        size_++;
+    }
+    void push_front(T value)
+    {
+        Node<T>* cur = dummy_;
+        add(value, cur);
+    }
+    void push_back(T value)
+    {
+        Node<T>* cur = dummy_->prev_;
+        add(value, cur);
+    }
+    bool empty()
+    {
+        return dummy_->next_ == dummy_;
+    }
 
-	int choicenum;
-	int timer = 3;
+    T remove(Node<T>* node)
+    {
+        if (empty())
+        {
+            throw std::logic_error("node is empty!");
+        }
+        T ret = node->value_;
+        node->prev_->next_ = node->next_;
+        node->next_->prev_ = node->prev_;
+        delete node;
+        node = node->prev_;
+        size_--;
+        return ret;
+    }
+    T pop_front()
+    {
+        Node<T>* cur = dummy_->next_;
+        return remove(cur);
+    }
 
-	printf("”¼‚©’š‚©\n1:”¼ 2:’š\n");
-	scanf_s("%d", &choicenum);
+    T pop_back()
+    {
+        Node<T>* cur = dummy_->prev_;
+        return remove(cur);
+    }
+    void dump()
+    {
+        Node<T>* ptr = dummy_->next_;
+        while (ptr != dummy_)
+        {
+            cout << ptr->value_ << ' ';
+            ptr = ptr->next_;
+        }
+        cout << '\n';
+    }
 
-	const int dicesize = 6;
-	int dice;
+    void clear()
+    {
+        while (!empty())
+        {
+            pop_front();
+        }
+    }
 
-	srand(time(NULL));
-	dice = rand() % dicesize + 1;
+    int size()
+    {
+        return size_;
+    }
+};
+int main()
+{
+   /* DoublyLinkedList<int> list;
+    list.push_front(13);
+    list.push_front(7);
+    list.push_front(10);
+    cout << "size: " << list.size() << '\n';
+    list.dump();
+    list.push_back(11);
+    cout << "size: " << list.size() << '\n';
+    list.dump();
+    cout << "remove: " << list.pop_back() << '\n';
+    cout << "size: " << list.size() << '\n';
+    list.dump();
+    cout << "remove: " << list.pop_front() << '\n';
+    cout << "size: " << list.size() << '\n';
+    list.dump();*/
+    while (1)
+    {
+        cout << "1.—v‘f‚Ì•\Ž¦" << '\n';
+        cout << "2.—v‘f‚Ì‘}“ü" << '\n';
+        cout << "3.—v‘f‚Ì•ÒW" << '\n';
+        cout << "4.—v‘f‚Ìíœ" << '\n';
 
-	std::function<void()>choice = [&]() {printf("%s\n", (choicenum == 1) ? "‘I‘ð‚Í”¼" : "‘I‘ð‚Í’š"); };
+        cout << "-----------------" << '\n';
+        cout << "‘€ì‚ð‘I‘ð‚µ‚Ä‚­‚¾‚³‚¢" << '\n';
 
+        int num;
+        cin >> num;
 
-	std::function<void()>anser = [&]() {printf("%s\n", (dice % 2) ? "“š‚¦‚Í”¼" : "“š‚¦‚Í’š"); };
+        switch (num)
+        {
+            case 1:
+                cout << "1" << '\n';
+                break;
+            case 2:
+                cout << "2" << '\n';
+                break;
+            case 3:
+                cout << "3" << '\n';
+                break;
+            case 4:
+                cout << "4" << '\n';
+                break;
+        }
+        if (num == 0)
+        {
+            break;
+        }
+    }
 
-	std::function<void(std::function<void()>, int)> setTimeout = [](std::function<void()> fx, int second) {fx(); Sleep(second * 1000); };
-
-	setTimeout(choice, timer);
-	anser();
-
-	system("pause");
-	return 0;
+    return 0;
 }
