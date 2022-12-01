@@ -72,7 +72,6 @@ public:
         node->prev_->next_ = node->next_;
         node->next_->prev_ = node->prev_;
         delete node;
-        node = node->prev_;
         size_--;
         return ret;
     }
@@ -113,7 +112,7 @@ public:
 };
 int main()
 {
-   /* DoublyLinkedList<int> list;
+    DoublyLinkedList<int> list;
     list.push_front(13);
     list.push_front(7);
     list.push_front(10);
@@ -127,8 +126,8 @@ int main()
     list.dump();
     cout << "remove: " << list.pop_front() << '\n';
     cout << "size: " << list.size() << '\n';
-    list.dump();*/
-    while (1)
+    list.dump();
+   /* while (1)
     {
         cout << "1.—v‘f‚Ì•\¦" << '\n';
         cout << "2.—v‘f‚Ì‘}“ü" << '\n';
@@ -160,7 +159,7 @@ int main()
         {
             break;
         }
-    }
+    }*/
 
     return 0;
 }
