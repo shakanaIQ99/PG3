@@ -176,7 +176,7 @@ inline T List<T>::remove(Cell<T>* node)
 {
     if (empty())
     {
-        throw std::logic_error("node is empty!");
+        throw std::logic_error("‹ó‚Å‚·");
     }
     T ret = node->value_;
     node->prev_->next_ = node->next_;

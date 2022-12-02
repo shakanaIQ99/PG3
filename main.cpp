@@ -109,9 +109,6 @@ int main()
 
 
             }
-
-            //順番を指定して要素を表示
-
             if (stoi(input) == 2)
             {
                 system("cls");
@@ -143,8 +140,6 @@ int main()
                 }
 
             }
-
-            // 要素操作に戻る
             if (stoi(input) == 9)
             {
                 state = State::MENU;
