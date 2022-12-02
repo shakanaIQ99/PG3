@@ -1,55 +1,271 @@
 #include"List.h"
+#include<string>
+
+enum class State
+{
+    MENU,
+    OUTPUT,
+    INPUT,
+    EDIT,
+    DEL
+};
+
+
+
 
 int main()
 {
-    List<int> list;
-    list.push_front(13);
-    list.push_front(7);
-    list.push_front(10);
-    cout << "size: " << list.size() << '\n';
-    list.dump();
-    list.push_back(11);
-    cout << "size: " << list.size() << '\n';
-    list.dump();
-    cout << "remove: " << list.pop_back() << '\n';
-    cout << "size: " << list.size() << '\n';
-    list.dump();
-    cout << "remove: " << list.pop_front() << '\n';
-    cout << "size: " << list.size() << '\n';
-    list.dump();
-   /* while (1)
+    string str;
+    List<string> Liststr;
+    Liststr.push_back("banana");
+    Liststr.push_back("apple");
+    Liststr.push_back("orange");
+
+    State state = State::MENU;
+
+    string input;
+    while (1)
     {
-        cout << "1.óvëfÇÃï\é¶" << '\n';
-        cout << "2.óvëfÇÃë}ì¸" << '\n';
-        cout << "3.óvëfÇÃï“èW" << '\n';
-        cout << "4.óvëfÇÃçÌèú" << '\n';
-
-        cout << "-----------------" << '\n';
-        cout << "ëÄçÏÇëIëÇµÇƒÇ≠ÇæÇ≥Ç¢" << '\n';
-
-        int num;
-        cin >> num;
-
-        switch (num)
+        if (state == State::MENU)
         {
-            case 1:
-                cout << "1" << '\n';
-                break;
-            case 2:
-                cout << "2" << '\n';
-                break;
-            case 3:
-                cout << "3" << '\n';
-                break;
-            case 4:
-                cout << "4" << '\n';
-                break;
+            system("cls");
+            
+             cout << "[óvëfÇÃëÄçÏ]" << endl;
+             cout << "1.óvëfÇÃï\é¶" << endl;
+             cout << "2.óvëfÇÃë}ì¸" << endl;
+             cout << "3.óvëfÇÃï“èW" << endl;
+             cout << "4.óvëfÇÃçÌèú" << endl;
+             cout << endl;
+             cout << "---------------------" << endl;
+             cout << "ëÄçÏÇëIëÇµÇƒÇ≠ÇæÇ≥Ç¢" << endl;
+             do
+             {
+                 cin >> input;
+                 try
+                 {
+                     stoi(input);
+                 }
+                 catch (std::invalid_argument)
+                 {
+                     input = "-256";
+                 }
+             } while (stoi(input) > 3 && stoi(input) < 1);
+             state = (State)stoi(input);
+           
         }
-        if (num == 0)
+        if (state == State::OUTPUT)
         {
-            break;
+            system("cls");
+            input = "0";
+            cout << "[óvëfÇÃï\é¶]" << endl;
+            cout << "1.óvëfÇÃàÍóóï\é¶" << endl;
+            cout << "2.èáî‘ÇéwíËÇµÇƒóvëfÇï\é¶" << endl;
+            cout << "9.óvëfëÄçÏÇ…ñﬂÇÈ" << endl;
+            cout << endl << "ëÄçÏÇëIëÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB" << endl;
+            do
+            {
+                cin >> input;
+
+                try
+                {
+                    stoi(input);
+                }
+                catch (std::invalid_argument)
+                {
+                    input = "-256";
+                }
+            } while (stoi(input) != 1 && stoi(input) != 2 && stoi(input) != 9);
+            if (stoi(input) == 1)
+            {
+                system("cls");
+                cout << "[óvëfÇÃàÍóóï\é¶]" << endl;
+                cout << "óvëfàÍóó: {" << endl;
+
+                Liststr.dump();
+
+                cout << "}" << endl << endl;
+                cout << "óvëfêî: " << Liststr.size() << endl;
+
+                cout << endl << "-------------------------------" << endl;
+                cout << "1.óvëfÇÃï\é¶Ç…ñﬂÇÈ" << endl;
+                cout << "2.óvëfÇÃëÄçÏÇ…ñﬂÇÈ" << endl;
+
+                do
+                {
+                    cin >> input;
+                    try
+                    {
+                        stoi(input);
+                    }
+                    catch (std::invalid_argument)
+                    {
+                        input = "-256";
+                    }
+                } while (stoi(input) != 1 && stoi(input) != 2);
+                if (stoi(input) == 2)
+                {
+                    state = State::MENU;
+                }
+
+
+            }
+
+            //èáî‘ÇéwíËÇµÇƒóvëfÇï\é¶
+
+            if (stoi(input) == 2)
+            {
+                system("cls");
+                cout << "[èáî‘ÇéwíËÇµÇƒóvëfÇï\é¶]" << endl;
+                cout << "ï\é¶ÇµÇΩÇ¢óvëfÇÃèáî‘ÇéwíËÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB" << endl;
+                cin >> input;
+                Liststr.choice_draw(stoi(input));
+
+                cout << endl << "---------------------------" << endl;
+                cout << "1.óvëfÇÃï\é¶Ç…ñﬂÇÈ" << endl;
+
+                cout << "2.óvëfÇÃëÄçÏÇ…ñﬂÇÈ" << endl;
+
+                do
+                {
+                    cin >> input;
+                    try
+                    {
+                        stoi(input);
+                    }
+                    catch (std::invalid_argument)
+                    {
+                        input = "-256";
+                    }
+                } while (stoi(input) != 1 && stoi(input) != 2);
+                if (stoi(input) == 2)
+                {
+                    state = State::MENU;
+                }
+
+            }
+
+            // óvëfëÄçÏÇ…ñﬂÇÈ
+            if (stoi(input) == 9)
+            {
+                state = State::MENU;
+            }
         }
-    }*/
+        if (state == State::INPUT)
+        {
+           
+            system("cls");
+            cout << "[ÉäÉXÉgóvëfÇÃë}ì¸]" << endl;
+            cout << "óvëfÇí«â¡Ç∑ÇÈèÍèäÇéwíËÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB" << endl;
+            cout << "ç≈å„îˆÇ…í«â¡Ç∑ÇÈèÍçáÇÕâΩÇ‡ì¸óÕÇµÇ»Ç¢Ç≈Ç≠ÇæÇ≥Ç¢ÅB" << endl;
+            cin.clear();
+            cin.ignore(1024, '\n');
+            getline(cin, input); 
+
+            cout << "í«â¡Ç∑ÇÈóvëfÇì¸óÕÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB" << endl;
+            cin >> str;
+            if (input == string(""))
+            {
+                Liststr.push_back(str);
+                cout << "óvëf\"" << str << "\"Ç™ç≈å„îˆÇ…ë}ì¸Ç≥ÇÍÇ‹ÇµÇΩÅB" << endl;
+            }
+            else
+            {
+                Liststr.Insert(stoi(input), str);
+                cout << "óvëf\"" << str << "\"Ç™" << input << "î‘ñ⁄Ç…ë}ì¸Ç≥ÇÍÇ‹ÇµÇΩÅB" << endl;
+            }
+
+            cout << "9:óvëfëÄçÏÇ…ñﬂÇÈ" << endl;
+            do {
+                cin >> input;
+                try {
+                    stoi(input);
+                }
+                catch (std::invalid_argument) {
+                    input = "-256";
+                }
+            } while (stoi(input) != 9);
+
+            if (stoi(input) == 9)
+            {
+                state = State::MENU;
+            }
+        }
+
+            if (state == State::EDIT)
+            {
+                cout << "óvëfÇÃï“èW" << endl;
+                system("cls");
+                cout << "[ÉäÉXÉgóvëfÇÃï“èW]" << endl;
+                cout << "óvëfÇï“èWÇ∑ÇÈèÍèäÇéwíËÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB" << endl;
+
+                cin.clear();
+                cin.ignore(1024, '\n');
+                getline(cin, input);
+
+                if (stoi(input) >= Liststr.size() || stoi(input) < 0)
+                {
+                    cout << input << "î‘ñ⁄ÇÃóvëfÇ™å©Ç¬Ç©ÇËÇ‹ÇπÇÒÇ≈ÇµÇΩÅB" << endl;
+                }
+                else {
+                    cout << "ï“èWå„ÇÃóvëfÇì¸óÕÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB" << endl;
+                    cin >> str;
+
+                    Liststr.replace(stoi(input), str);
+                    cout << "óvëf\"" << input << "\"Ç™" << str << "Ç…ïœçXÇ≥ÇÍÇ‹ÇµÇΩÅB" << endl;
+                }
+
+                cout << "9:óvëfëÄçÏÇ…ñﬂÇÈ" << endl;
+                do {
+                    cin >> input;
+                    try {
+                        stoi(input);
+                    }
+                    catch (std::invalid_argument) {
+                        input = "-256";
+                    }
+                } while (stoi(input) != 9);
+
+                if (stoi(input) == 9)
+                {
+                    state = State::MENU;
+                }
+            }
+            if (state == State::DEL)
+            {
+                system("cls");
+                cout << "[ÉäÉXÉgóvëfÇÃçÌèú]" << endl;
+                cout << "óvëfÇçÌèúÇ∑ÇÈèÍèäÇéwíËÇµÇƒÇ≠ÇæÇ≥Ç¢ÅB" << endl;
+
+                cin >> input;
+
+                if (stoi(input) >= Liststr.size() || stoi(input) < 0)
+                {
+                    cout << input << "î‘ñ⁄ÇÃóvëfÇ™å©Ç¬Ç©ÇËÇ‹ÇπÇÒÇ≈ÇµÇΩÅB" << endl;
+                }
+                else
+                {
+
+                    Liststr.DeleteCell(stoi(input));
+                    cout << input << "î‘ñ⁄ÇÃóvëfÇ™çÌèúÇ≥ÇÍÇ‹ÇµÇΩÅB" << endl;
+                }
+
+                cout << "9:óvëfëÄçÏÇ…ñﬂÇÈ" << endl;
+                do {
+                    cin >> input;
+                    try {
+                        stoi(input);
+                    }
+                    catch (std::invalid_argument) {
+                        input = "-256";
+                    }
+                } while (stoi(input) != 9);
+
+                if (stoi(input) == 9)
+                {
+                    state = State::MENU;
+                }
+            }
+    }
 
     return 0;
 }

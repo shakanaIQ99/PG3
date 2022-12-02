@@ -4,29 +4,37 @@
 #include <stdexcept>
 using namespace std;
 template <typename T>
-struct Node
+struct Cell
 {
     T value_;
-    Node* prev_;
-    Node* next_;
-    Node()
+    Cell* prev_;
+    Cell* next_;
+    Cell()
     {
         prev_ = this;
         next_ = this;
     }
-    Node(T value, Node* prev, Node* next)
+    Cell(T value, Cell* prev, Cell* next)
     {
         value_ = value;
         prev_ = prev;
         next_ = next;
     }
+
+    T* operator*()
+    {
+        return &value_;
+    };
+
 };
+
+
 template <typename T>
 class List
 {
 
 private:
-    Node<T>* dummy_;
+    Cell<T>* dummy_;
     int size_;
 public:
     List();
@@ -35,7 +43,7 @@ public:
         clear();
     }
 
-    void add(T v, Node<T>* node);
+    void add(T v, Cell<T>* node);
     void push_front(T value);
     void push_back(T value);
     bool empty()
@@ -43,29 +51,79 @@ public:
         return dummy_->next_ == dummy_;
     }
 
-    T remove(Node<T>* node);
+    T remove(Cell<T>* node);
     T pop_front()
     {
-        Node<T>* cur = dummy_->next_;
+        Cell<T>* cur = dummy_->next_;
         return remove(cur);
     }
 
     T pop_back()
     {
-        Node<T>* cur = dummy_->prev_;
+        Cell<T>* cur = dummy_->prev_;
         return remove(cur);
     }
     void dump()
     {
-        Node<T>* ptr = dummy_->next_;
+        Cell<T>* ptr = dummy_->next_;
+        int i = 0;
         while (ptr != dummy_)
         {
-            cout << ptr->value_ << ' ';
+            cout <<i << " : " << ptr->value_ << endl;
             ptr = ptr->next_;
+            i++;
         }
-        cout << '\n';
+
+       
     }
 
+    void replace(int num,T&obj)
+    {
+        Cell<T>* ptr = dummy_->next_;
+        for (int i = 0; i < num; i++) {
+            ptr = ptr->next_;
+        }
+        ptr->value_ = obj;
+    }
+
+    void choice_draw(int i)
+    {
+        Cell<T>* ptr = dummy_->next_;
+        int num = 0;
+        while (num<i)
+        {
+            ptr = ptr->next_;
+            num++;
+        }
+        cout << i << " : " << ptr->value_ << endl;
+    }
+
+   void Insert(int num, T& obj)
+   {
+        if (num >= size()) 
+        {
+            push_back(obj);
+        }
+        else
+        {
+            Cell<T>* ptr = dummy_;
+            for (int i = 0; i < num; i++) {
+                ptr = ptr->next_;
+            }
+            add(obj, ptr);
+        }
+       
+    };
+
+   void DeleteCell(int num)
+   {
+       Cell<T>* ptr = dummy_->next_;
+       for (int i = 0; i < num; i++) {
+           ptr = ptr->next_;
+       }
+       remove(ptr);
+   }
+   
     void clear()
     {
         while (!empty())
@@ -84,15 +142,15 @@ template<typename T>
 inline List<T>::List()
 {
     
-    dummy_ = new Node<T>();
+    dummy_ = new Cell<T>();
     size_ = 0;
     
 }
 
 template<typename T>
-inline void List<T>::add(T v, Node<T>* node)
+inline void List<T>::add(T v, Cell<T>* node)
 {
-    Node<T>* newNode = new Node<T>(v, node, node->next_);
+    Cell<T>* newNode = new Cell<T>(v, node, node->next_);
     node->next_->prev_ = newNode;
     node->next_ = newNode;
     node = newNode;
@@ -102,19 +160,19 @@ inline void List<T>::add(T v, Node<T>* node)
 template<typename T>
 inline void List<T>::push_front(T value)
 {
-    Node<T>* cur = dummy_;
+    Cell<T>* cur = dummy_;
     add(value, cur);
 }
 
 template<typename T>
 inline void List<T>::push_back(T value)
 {
-    Node<T>* cur = dummy_->prev_;
+    Cell<T>* cur = dummy_->prev_;
     add(value, cur);
 }
 
 template<typename T>
-inline T List<T>::remove(Node<T>* node)
+inline T List<T>::remove(Cell<T>* node)
 {
     if (empty())
     {
